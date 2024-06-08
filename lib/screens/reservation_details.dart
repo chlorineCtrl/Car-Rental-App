@@ -38,7 +38,7 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
@@ -64,7 +64,7 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                       },
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: TextFormField(
                       readOnly: true,

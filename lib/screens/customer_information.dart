@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/customer_information_provider.dart';
-import '../models/customer.dart';
 
 class CustomerInformationPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -10,7 +9,7 @@ class CustomerInformationPage extends StatelessWidget {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
-  CustomerInformationPage({Key? key}) : super(key: key);
+  CustomerInformationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +64,7 @@ class CustomerInformationPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Create a CustomerInformation object with form data
-                    CustomerInformation customerInfo = CustomerInformation(
-                      firstName: _firstNameController.text,
-                      lastName: _lastNameController.text,
-                      email: _emailController.text,
-                      phone: _phoneController.text,
-                    );
-
+                    // Update customer information via the provider
                     Provider.of<CustomerInformationProvider>(context,
                             listen: false)
                         .updateCustomerInformation(
@@ -81,6 +73,7 @@ class CustomerInformationPage extends StatelessWidget {
                       email: _emailController.text,
                       phone: _phoneController.text,
                     );
+
                     Navigator.pushNamed(context, '/vehicle-info');
                   }
                 },
