@@ -1,6 +1,6 @@
 class Reservation {
   String reservationId;
-  DateTime pickupDate;
+  DateTime pickupDate; // Required parameter
   DateTime returnDate;
   int duration;
   double discount;
@@ -15,7 +15,7 @@ class Reservation {
 
   Reservation({
     this.reservationId = '',
-    required this.pickupDate,
+    required this.pickupDate, // Required parameter
     required this.returnDate,
     this.duration = 0,
     this.discount = 0.0,

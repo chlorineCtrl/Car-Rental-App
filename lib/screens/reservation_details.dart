@@ -46,7 +46,7 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                         discount: _discount,
                       ),
                     );
-                    Navigator.pushNamed(context, '/');
+                    Navigator.pushNamed(context, '/customer-info');
                   }
                 },
                 child: const Text('Next'),
