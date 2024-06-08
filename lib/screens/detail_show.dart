@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/reservation_provider.dart';
 import '../providers/customer_information_provider.dart';
-import '../providers/vehicle_information_provider.dart';
 import '../providers/additional_charges_provider.dart';
 
 class DetailShowPage extends StatelessWidget {
@@ -12,11 +11,16 @@ class DetailShowPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final reservation = Provider.of<ReservationProvider>(context).reservation;
     final customerInfo = Provider.of<CustomerInformationProvider>(context);
-    final vehicleInfo = Provider.of<VehicleInformationProvider>(context);
     final additionalCharges = Provider.of<AdditionalChargesProvider>(context);
 
+    // Retrieve vehicle type and model from arguments
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String vehicleType = args['vehicleType'];
+    final String vehicleModel = args['vehicleModel'];
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Reservation Details')),
+      appBar: AppBar(title: const Text('Reservation Transcript')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -34,10 +38,9 @@ class DetailShowPage extends StatelessWidget {
             Text('Email: ${customerInfo.email}'),
             Text('Phone: ${customerInfo.phone}'),
 
-            // Additional vehicle information
-            Text('Vehicle Type: ${vehicleInfo.vehicleInformation.vehicleType}'),
-            Text(
-                'Vehicle Model: ${vehicleInfo.vehicleInformation.vehicleModel}'),
+            // Vehicle information from arguments
+            Text('Vehicle Type: $vehicleType'),
+            Text('Vehicle Model: $vehicleModel'),
 
             // Additional charges
             Text(

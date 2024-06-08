@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/vehicle_information_provider.dart';
-import '../models/vehicle.dart';
 import '../services/api_service.dart';
 
 class VehicleInformationPage extends StatefulWidget {
@@ -40,6 +37,7 @@ class VehicleInformationPageState extends State<VehicleInformationPage> {
   }
 
   Future<void> _fetchFilteredCars() async {
+    if (!mounted) return; // Check if the widget is still mounted
     setState(() {
       _isLoading = true;
     });
@@ -48,11 +46,13 @@ class VehicleInformationPageState extends State<VehicleInformationPage> {
         _vehicleTypeController.text,
         _vehicleModelController.text,
       );
+      if (!mounted) return; // Check again before updating state
       setState(() {
         _filteredCars = cars;
         _isLoading = false;
       });
     } catch (e) {
+      if (!mounted) return; // Check again before updating state
       setState(() {
         _isLoading = false;
       });
@@ -61,7 +61,15 @@ class VehicleInformationPageState extends State<VehicleInformationPage> {
   }
 
   void _navigateToNextPage(BuildContext context) {
-    Navigator.of(context).pushNamed('/additional-charges');
+    final String vehicleType = _vehicleTypeController.text;
+    final String vehicleModel = _vehicleModelController.text;
+    Navigator.of(context).pushNamed(
+      '/additional-charges',
+      arguments: {
+        'vehicleType': vehicleType,
+        'vehicleModel': vehicleModel,
+      },
+    );
   }
 
   @override

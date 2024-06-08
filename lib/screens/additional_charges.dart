@@ -44,7 +44,11 @@ class _AdditionalChargesPageState extends State<AdditionalChargesPage> {
                 collisionDamage: _collisionDamage,
                 rentalTax: _rentalTax,
               );
-              Navigator.pushNamed(context, '/detail-show');
+              Navigator.pushNamed(
+                context,
+                '/detail-show',
+                arguments: ModalRoute.of(context)!.settings.arguments,
+              );
             },
             child: const Text('Next'),
           ),
