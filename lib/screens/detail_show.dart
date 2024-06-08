@@ -5,7 +5,7 @@ import '../providers/customer_information_provider.dart';
 import '../providers/additional_charges_provider.dart';
 
 class DetailShowPage extends StatelessWidget {
-  const DetailShowPage({super.key});
+  const DetailShowPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +13,14 @@ class DetailShowPage extends StatelessWidget {
     final customerInfo = Provider.of<CustomerInformationProvider>(context);
     final additionalCharges = Provider.of<AdditionalChargesProvider>(context);
 
-    // Retrieve vehicle type and model from arguments
+    // Retrieve vehicle type, model, and rates from arguments
     final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String vehicleType = args['vehicleType'];
     final String vehicleModel = args['vehicleModel'];
+    final int hourlyRate = args['hourlyRate'];
+    final int dailyRate = args['dailyRate'];
+    final int weeklyRate = args['weeklyRate'];
 
     return Scaffold(
       appBar: AppBar(title: const Text('Reservation Transcript')),
@@ -41,6 +44,11 @@ class DetailShowPage extends StatelessWidget {
             // Vehicle information from arguments
             Text('Vehicle Type: $vehicleType'),
             Text('Vehicle Model: $vehicleModel'),
+
+            // Display hourly, daily, and weekly rates
+            Text('Hourly Rate: \$${hourlyRate.toStringAsFixed(2)}'),
+            Text('Daily Rate: \$${dailyRate.toStringAsFixed(2)}'),
+            Text('Weekly Rate: \$${weeklyRate.toStringAsFixed(2)}'),
 
             // Additional charges
             Text(

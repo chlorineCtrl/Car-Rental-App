@@ -60,14 +60,20 @@ class VehicleInformationPageState extends State<VehicleInformationPage> {
     }
   }
 
-  void _navigateToNextPage(BuildContext context) {
+  void _navigateToNextPage(BuildContext context, Map<String, dynamic> car) {
     final String vehicleType = _vehicleTypeController.text;
     final String vehicleModel = _vehicleModelController.text;
+
+    // Object? arguments = ModalRoute.of(context)!.settings.arguments;
+
     Navigator.of(context).pushNamed(
       '/additional-charges',
       arguments: {
         'vehicleType': vehicleType,
         'vehicleModel': vehicleModel,
+        'hourlyRate': car['hourlyRate'],
+        'dailyRate': car['dailyRate'],
+        'weeklyRate': car['weeklyRate'],
       },
     );
   }
@@ -92,6 +98,7 @@ class VehicleInformationPageState extends State<VehicleInformationPage> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16.0), // Add SizedBox here
               TextFormField(
                 controller: _vehicleModelController,
                 decoration: const InputDecoration(labelText: 'Vehicle Model'),
@@ -105,7 +112,7 @@ class VehicleInformationPageState extends State<VehicleInformationPage> {
               _isLoading ? const CircularProgressIndicator() : _buildCarsList(),
               ElevatedButton(
                 onPressed: () {
-                  _navigateToNextPage(context);
+                  _navigateToNextPage(context, _filteredCars.first);
                 },
                 child: const Text('Next'),
               ),
@@ -128,61 +135,41 @@ class VehicleInformationPageState extends State<VehicleInformationPage> {
             return Card(
               margin:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
+              child: ListTile(
+                leading: Image.network(
+                  car['imageURL'],
+                  width: 100,
+                  height: 60,
+                  fit: BoxFit.cover,
+                ),
+                title: Text('${car['make']} ${car['model']}'),
+                subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Image.network(
-                          car['imageURL'],
-                          width: 100,
-                          height: 60,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(width: 16.0),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${car['make']} ${car['model']}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            Text(
-                              '${car['seats']} seats, ${car['bags']} bags',
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16.0),
+                    Text('${car['seats']} seats, ${car['bags']} bags'),
+                    const SizedBox(height: 8.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '\$${car['rates']['hourly']} / Hour',
+                          '\$${car['hourlyRate']} / Hour',
                           style: const TextStyle(fontSize: 14),
                         ),
                         Text(
-                          '\$${car['rates']['daily']} / Day',
+                          '\$${car['dailyRate']} / Day',
                           style: const TextStyle(fontSize: 14),
                         ),
                         Text(
-                          '\$${car['rates']['weekly']} / Week',
+                          '\$${car['weeklyRate']} / Week',
                           style: const TextStyle(fontSize: 14),
                         ),
                       ],
                     ),
                   ],
                 ),
+                onTap: () {
+                  _navigateToNextPage(context, car);
+                },
               ),
             );
           },

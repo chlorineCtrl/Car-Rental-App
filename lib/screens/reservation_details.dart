@@ -59,6 +59,7 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                         if (pickedDate != null && pickedDate != _pickupDate) {
                           setState(() {
                             _pickupDate = pickedDate;
+                            _updateDuration();
                           });
                         }
                       },
@@ -83,6 +84,7 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                         if (pickedDate != null && pickedDate != _returnDate) {
                           setState(() {
                             _returnDate = pickedDate;
+                            _updateDuration();
                           });
                         }
                       },
@@ -92,6 +94,7 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                enabled: false, // Disable editing manually
                 initialValue: _duration.toString(),
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(labelText: 'Duration (days)'),
@@ -101,16 +104,12 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  setState(() {
-                    _duration = int.tryParse(value) ?? 1;
-                  });
-                },
               ),
               const SizedBox(height: 16),
               TextFormField(
                 initialValue: _discount.toString(),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration(labelText: 'Discount'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -142,7 +141,17 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                         discount: _discount,
                       ),
                     );
-                    Navigator.pushNamed(context, '/customer-info');
+                    Navigator.pushNamed(
+                      context,
+                      '/customer-info',
+                      arguments: {
+                        'reservationId': _reservationIdController.text,
+                        'pickupDate': _pickupDate,
+                        'returnDate': _returnDate,
+                        'duration': _duration,
+                        'discount': _discount,
+                      },
+                    );
                   }
                 },
                 child: const Text('Next'),
@@ -152,5 +161,14 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
         ),
       ),
     );
+  }
+
+  void _updateDuration() {
+    final difference = _returnDate.difference(_pickupDate).inDays;
+    setState(() {
+      _duration = difference > 0
+          ? difference + 1
+          : 1; // Adding 1 to include the end date
+    });
   }
 }

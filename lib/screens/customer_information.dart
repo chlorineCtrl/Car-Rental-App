@@ -74,7 +74,11 @@ class CustomerInformationPage extends StatelessWidget {
                       phone: _phoneController.text,
                     );
 
-                    Navigator.pushNamed(context, '/vehicle-info');
+                    Navigator.pushNamed(
+                      context,
+                      '/vehicle-info',
+                      arguments: ModalRoute.of(context)!.settings.arguments,
+                    );
                   }
                 },
                 child: const Text('Next'),
