@@ -13,10 +13,10 @@ class ReservationDetailsPage extends StatefulWidget {
 class ReservationDetailsPageState extends State<ReservationDetailsPage> {
   final _formKey = GlobalKey<FormState>();
   final _reservationIdController = TextEditingController();
-  final DateTime _pickupDate = DateTime.now();
-  final DateTime _returnDate = DateTime.now().add(const Duration(days: 1));
-  final int _duration = 1;
-  final double _discount = 0.0;
+  late DateTime _pickupDate = DateTime.now();
+  late DateTime _returnDate = DateTime.now().add(const Duration(days: 1));
+  int _duration = 1;
+  double _discount = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +31,104 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
               TextFormField(
                 controller: _reservationIdController,
                 decoration: const InputDecoration(labelText: 'Reservation ID'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a reservation ID';
+                  }
+                  return null;
+                },
               ),
-              // Add other form fields for pickup date, return date, duration, and discount
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      readOnly: true,
+                      controller:
+                          TextEditingController(text: _pickupDate.toString()),
+                      decoration:
+                          const InputDecoration(labelText: 'Pickup Date'),
+                      onTap: () async {
+                        final DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: _pickupDate,
+                          firstDate: DateTime.now(),
+                          lastDate:
+                              DateTime.now().add(const Duration(days: 365)),
+                        );
+                        if (pickedDate != null && pickedDate != _pickupDate) {
+                          setState(() {
+                            _pickupDate = pickedDate;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                      readOnly: true,
+                      controller:
+                          TextEditingController(text: _returnDate.toString()),
+                      decoration:
+                          const InputDecoration(labelText: 'Return Date'),
+                      onTap: () async {
+                        final DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: _returnDate,
+                          firstDate: DateTime.now(),
+                          lastDate:
+                              DateTime.now().add(const Duration(days: 365)),
+                        );
+                        if (pickedDate != null && pickedDate != _returnDate) {
+                          setState(() {
+                            _returnDate = pickedDate;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                initialValue: _duration.toString(),
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'Duration (days)'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter duration';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _duration = int.tryParse(value) ?? 1;
+                  });
+                },
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                initialValue: _discount.toString(),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                decoration: const InputDecoration(labelText: 'Discount'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter discount';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  // Parse the input value to a double
+                  double? discount = double.tryParse(value);
+                  if (discount != null) {
+                    setState(() {
+                      _discount = discount;
+                    });
+                  }
+                },
+              ),
+              SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {

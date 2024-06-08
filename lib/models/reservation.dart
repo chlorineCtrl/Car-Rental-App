@@ -1,31 +1,15 @@
 class Reservation {
-  String reservationId;
-  DateTime pickupDate; // Required parameter
-  DateTime returnDate;
-  int duration;
-  double discount;
-  String firstName;
-  String lastName;
-  String email;
-  String phone;
-  String vehicleType;
-  String vehicleModel;
-  bool collisionDamage;
-  bool rentalTax;
+  String? reservationId;
+  late DateTime pickupDate;
+  late DateTime returnDate;
+  late int duration;
+  late double discount;
 
   Reservation({
-    this.reservationId = '',
-    required this.pickupDate, // Required parameter
+    this.reservationId,
+    required this.pickupDate,
     required this.returnDate,
-    this.duration = 0,
-    this.discount = 0.0,
-    this.firstName = '',
-    this.lastName = '',
-    this.email = '',
-    this.phone = '',
-    this.vehicleType = '',
-    this.vehicleModel = '',
-    this.collisionDamage = false,
-    this.rentalTax = false,
+    required this.duration,
+    required this.discount,
   });
 }
