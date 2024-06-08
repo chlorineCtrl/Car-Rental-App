@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
           '/': (context) => const ReservationDetailsPage(),
           '/customer-info': (context) => CustomerInformationPage(),
           '/vehicle-info': (context) => VehicleInformationPage(),
-          '/additional-charges': (context) => AdditionalChargesPage(),
-          '/detail-show': (context) => DetailShowPage(),
+          '/additional-charges': (context) => const AdditionalChargesPage(),
+          '/detail-show': (context) => const DetailShowPage(),
         },
       ),
     );

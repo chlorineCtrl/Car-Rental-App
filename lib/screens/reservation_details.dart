@@ -90,7 +90,7 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 initialValue: _duration.toString(),
                 keyboardType: TextInputType.number,
@@ -107,10 +107,10 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                   });
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 initialValue: _discount.toString(),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration(labelText: 'Discount'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -128,7 +128,7 @@ class ReservationDetailsPageState extends State<ReservationDetailsPage> {
                   }
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {

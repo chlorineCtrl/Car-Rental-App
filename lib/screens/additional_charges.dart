@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/additional_charges_provider.dart';
 
 class AdditionalChargesPage extends StatefulWidget {
-  const AdditionalChargesPage({Key? key}) : super(key: key);
+  const AdditionalChargesPage({super.key});
 
   @override
   _AdditionalChargesPageState createState() => _AdditionalChargesPageState();
@@ -16,11 +16,11 @@ class _AdditionalChargesPageState extends State<AdditionalChargesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Additional Charges')),
+      appBar: AppBar(title: const Text('Additional Charges')),
       body: Column(
         children: <Widget>[
           CheckboxListTile(
-            title: Text('Collision Damage'),
+            title: const Text('Collision Damage'),
             value: _collisionDamage,
             onChanged: (value) {
               setState(() {
@@ -29,7 +29,7 @@ class _AdditionalChargesPageState extends State<AdditionalChargesPage> {
             },
           ),
           CheckboxListTile(
-            title: Text('Rental Tax'),
+            title: const Text('Rental Tax'),
             value: _rentalTax,
             onChanged: (value) {
               setState(() {
@@ -46,7 +46,7 @@ class _AdditionalChargesPageState extends State<AdditionalChargesPage> {
               );
               Navigator.pushNamed(context, '/detail-show');
             },
-            child: Text('Next'),
+            child: const Text('Next'),
           ),
         ],
       ),

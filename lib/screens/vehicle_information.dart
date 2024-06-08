@@ -13,7 +13,7 @@ class VehicleInformationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Vehicle Information')),
+      appBar: AppBar(title: const Text('Vehicle Information')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -22,7 +22,7 @@ class VehicleInformationPage extends StatelessWidget {
             children: <Widget>[
               TextFormField(
                 controller: _vehicleTypeController,
-                decoration: InputDecoration(labelText: 'Vehicle Type'),
+                decoration: const InputDecoration(labelText: 'Vehicle Type'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter vehicle type';
@@ -32,7 +32,7 @@ class VehicleInformationPage extends StatelessWidget {
               ),
               TextFormField(
                 controller: _vehicleModelController,
-                decoration: InputDecoration(labelText: 'Vehicle Model'),
+                decoration: const InputDecoration(labelText: 'Vehicle Model'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter vehicle model';
@@ -55,7 +55,7 @@ class VehicleInformationPage extends StatelessWidget {
                     Navigator.pushNamed(context, '/additional-charges');
                   }
                 },
-                child: Text('Next'),
+                child: const Text('Next'),
               ),
             ],
           ),
