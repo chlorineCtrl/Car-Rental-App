@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import '../models/vehicle.dart'; // Import the VehicleInformation model
 
 class VehicleInformationProvider with ChangeNotifier {
-  String _vehicleType = '';
-  String _vehicleModel = '';
+  VehicleInformation _vehicleInformation =
+      VehicleInformation(vehicleType: '', vehicleModel: '');
 
-  String get vehicleType => _vehicleType;
-  String get vehicleModel => _vehicleModel;
+  VehicleInformation get vehicleInformation => _vehicleInformation;
 
-  void updateVehicleInformation({
-    required String vehicleType,
-    required String vehicleModel,
-  }) {
-    _vehicleType = vehicleType;
-    _vehicleModel = vehicleModel;
+  void updateVehicleInformation(VehicleInformation newVehicleInfo) {
+    _vehicleInformation = newVehicleInfo;
     notifyListeners();
   }
 }

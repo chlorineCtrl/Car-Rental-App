@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/vehicle_information_provider.dart';
+import '../models/vehicle.dart'; // Import the VehicleInformation model
 
 class VehicleInformationPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _vehicleTypeController = TextEditingController();
   final _vehicleModelController = TextEditingController();
 
-  VehicleInformationPage({super.key});
+  VehicleInformationPage({super.key}); // Corrected key argument
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +23,35 @@ class VehicleInformationPage extends StatelessWidget {
               TextFormField(
                 controller: _vehicleTypeController,
                 decoration: InputDecoration(labelText: 'Vehicle Type'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter vehicle type';
+                  }
+                  return null;
+                },
               ),
-              // Add other form field for vehicle model
+              TextFormField(
+                controller: _vehicleModelController,
+                decoration: InputDecoration(labelText: 'Vehicle Model'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter vehicle model';
+                  }
+                  return null;
+                },
+              ),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    Provider.of<VehicleInformationProvider>(context,
-                            listen: false)
-                        .updateVehicleInformation(
+                    // Create a VehicleInformation object with form data
+                    VehicleInformation vehicleInfo = VehicleInformation(
                       vehicleType: _vehicleTypeController.text,
                       vehicleModel: _vehicleModelController.text,
                     );
+
+                    Provider.of<VehicleInformationProvider>(context,
+                            listen: false)
+                        .updateVehicleInformation(vehicleInfo);
                     Navigator.pushNamed(context, '/additional-charges');
                   }
                 },
